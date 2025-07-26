@@ -83,66 +83,87 @@ const HeroSection = ({ data, stats }) => {
             </div>
           </div>
 
-          {/* Right Content - Natural Character Integration */}
+          {/* Right Content - Circular Character with Glow */}
           <div className="flex justify-center lg:justify-end relative lg:-mr-8">
             <div className="relative">
-              {/* Character with Natural Integration */}
+              {/* Circular Character with Glowing Effects */}
               <div className="relative w-80 h-80 lg:w-[420px] lg:h-[420px]">
                 
-                {/* Soft Ambient Glow */}
-                <div className="absolute inset-0 bg-gradient-to-r from-[rgb(218,255,1)]/15 via-[rgb(218,255,1)]/8 to-transparent rounded-full blur-3xl scale-110 animate-pulse"></div>
+                {/* Outer Glow Rings */}
+                <div className="absolute inset-0 rounded-full bg-gradient-to-r from-[rgb(218,255,1)]/20 via-[rgb(218,255,1)]/10 to-[rgb(218,255,1)]/5 blur-2xl scale-110 animate-pulse"></div>
+                <div className="absolute inset-2 rounded-full bg-[rgb(218,255,1)]/15 blur-xl scale-105 animate-pulse" style={{animationDelay: '0.5s'}}></div>
+                <div className="absolute inset-4 rounded-full bg-[rgb(218,255,1)]/10 blur-lg scale-102 animate-pulse" style={{animationDelay: '1s'}}></div>
                 
-                {/* Character Image - Background Removed Effect */}
-                <div className="relative w-full h-full">
+                {/* Main Circular Container */}
+                <div className="relative w-full h-full rounded-full overflow-hidden border-4 border-[rgb(218,255,1)]/30 shadow-2xl hover:border-[rgb(218,255,1)]/50 transition-all duration-700 animate-float">
+                  
+                  {/* Circular Glowing Border */}
+                  <div className="absolute inset-0 rounded-full border-2 border-[rgb(218,255,1)]/40 shadow-[0_0_30px_rgba(218,255,1,0.3)] hover:shadow-[0_0_50px_rgba(218,255,1,0.5)] transition-all duration-700"></div>
+                  
+                  {/* Character Image - Circular */}
                   <img
                     src="https://customer-assets.emergentagent.com/job_tech-portfolio-ai/artifacts/0iqft43y_aiboipng.png"
                     alt="Risheek N - AI Developer"
-                    className="w-full h-full object-contain mix-blend-screen filter contrast-125 brightness-110 saturate-110 drop-shadow-2xl hover:scale-105 transition-all duration-700 animate-float"
+                    className="w-full h-full object-cover mix-blend-screen filter contrast-125 brightness-110 saturate-110 hover:scale-105 transition-all duration-700"
                     style={{
-                      filter: 'contrast(1.3) brightness(1.1) saturate(1.2) drop-shadow(0 25px 50px rgba(0,0,0,0.5)) drop-shadow(0 0 30px rgba(218,255,1,0.2))'
+                      filter: 'contrast(1.3) brightness(1.1) saturate(1.2)'
                     }}
                   />
                   
-                  {/* Character Soft Ground Shadow */}
-                  <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-64 h-8 bg-gradient-to-r from-transparent via-[rgb(218,255,1)]/10 to-transparent rounded-full blur-xl"></div>
+                  {/* Inner Circular Glow */}
+                  <div className="absolute inset-0 rounded-full bg-gradient-to-t from-[rgb(17,17,19)]/20 via-transparent to-[rgb(218,255,1)]/5"></div>
                 </div>
 
-                {/* Floating Tech Elements - Around Character */}
-                <div className="absolute top-12 left-8 bg-[rgba(218,255,1,0.1)] backdrop-blur-sm rounded-full px-3 py-1.5 border border-[rgba(218,255,1,0.3)] shadow-lg animate-bounce" style={{animationDelay: '0s', animationDuration: '3s'}}>
+                {/* Floating Tech Elements - Around Circular Avatar */}
+                <div className="absolute -top-2 left-12 bg-[rgba(218,255,1,0.1)] backdrop-blur-sm rounded-full px-3 py-1.5 border border-[rgba(218,255,1,0.3)] shadow-lg animate-bounce" style={{animationDelay: '0s', animationDuration: '3s'}}>
                   <span className="text-xs font-semibold text-[rgb(218,255,1)]">Backend + AI</span>
                 </div>
                 
-                <div className="absolute top-8 right-12 bg-[rgba(218,255,1,0.1)] backdrop-blur-sm rounded-full px-3 py-1.5 border border-[rgba(218,255,1,0.3)] shadow-lg animate-bounce" style={{animationDelay: '1s', animationDuration: '4s'}}>
+                <div className="absolute top-8 -right-4 bg-[rgba(218,255,1,0.1)] backdrop-blur-sm rounded-full px-3 py-1.5 border border-[rgba(218,255,1,0.3)] shadow-lg animate-bounce" style={{animationDelay: '1s', animationDuration: '4s'}}>
                   <span className="text-xs font-semibold text-[rgb(218,255,1)]">while(alive)</span>
                 </div>
                 
-                <div className="absolute bottom-20 left-4 bg-[rgba(218,255,1,0.1)] backdrop-blur-sm rounded-full px-3 py-1.5 border border-[rgba(218,255,1,0.3)] shadow-lg animate-bounce" style={{animationDelay: '2s', animationDuration: '5s'}}>
+                <div className="absolute -bottom-2 left-8 bg-[rgba(218,255,1,0.1)] backdrop-blur-sm rounded-full px-3 py-1.5 border border-[rgba(218,255,1,0.3)] shadow-lg animate-bounce" style={{animationDelay: '2s', animationDuration: '5s'}}>
                   <span className="text-xs font-semibold text-[rgb(218,255,1)]">REST API</span>
                 </div>
                 
-                <div className="absolute bottom-16 right-8 bg-[rgba(218,255,1,0.1)] backdrop-blur-sm rounded-full px-3 py-1.5 border border-[rgba(218,255,1,0.3)] shadow-lg animate-bounce" style={{animationDelay: '0.5s', animationDuration: '3.5s'}}>
+                <div className="absolute bottom-12 -right-6 bg-[rgba(218,255,1,0.1)] backdrop-blur-sm rounded-full px-3 py-1.5 border border-[rgba(218,255,1,0.3)] shadow-lg animate-bounce" style={{animationDelay: '0.5s', animationDuration: '3.5s'}}>
                   <span className="text-xs font-semibold text-[rgb(218,255,1)]">Python + JS</span>
                 </div>
 
-                {/* Floating Code Particles */}
-                <div className="absolute top-1/4 -left-4 text-[rgb(218,255,1)]/60 text-sm font-mono animate-bounce" style={{animationDelay: '0s', animationDuration: '4s'}}>
+                {/* Floating Code Particles - Orbital Pattern */}
+                <div className="absolute top-1/4 -left-8 text-[rgb(218,255,1)]/60 text-sm font-mono animate-bounce" style={{animationDelay: '0s', animationDuration: '4s'}}>
                   {'</>'}
                 </div>
-                <div className="absolute top-1/2 -right-6 text-[rgb(218,255,1)]/40 text-xs font-mono animate-bounce" style={{animationDelay: '2s', animationDuration: '5s'}}>
+                <div className="absolute top-1/2 -right-10 text-[rgb(218,255,1)]/40 text-xs font-mono animate-bounce" style={{animationDelay: '2s', animationDuration: '5s'}}>
                   {'{}'}
                 </div>
-                <div className="absolute bottom-1/3 -left-6 text-[rgb(218,255,1)]/50 text-xs font-mono animate-bounce" style={{animationDelay: '1s', animationDuration: '3s'}}>
+                <div className="absolute bottom-1/4 -left-6 text-[rgb(218,255,1)]/50 text-xs font-mono animate-bounce" style={{animationDelay: '1s', animationDuration: '3s'}}>
                   {'[]'}
                 </div>
+                <div className="absolute top-8 left-1/2 text-[rgb(218,255,1)]/30 text-xs font-mono animate-bounce" style={{animationDelay: '1.5s', animationDuration: '4.5s'}}>
+                  {'()'}
+                </div>
 
-                {/* Interactive Light Rays */}
-                <div className="absolute top-1/2 left-0 w-full h-0.5 bg-gradient-to-r from-transparent via-[rgb(218,255,1)]/20 to-transparent animate-pulse"></div>
-                <div className="absolute top-1/3 left-0 w-full h-0.5 bg-gradient-to-r from-[rgb(218,255,1)]/10 via-transparent to-[rgb(218,255,1)]/10 animate-pulse" style={{animationDelay: '1s'}}></div>
+                {/* Rotating Glow Effect */}
+                <div className="absolute inset-0 rounded-full animate-spin" style={{animationDuration: '20s'}}>
+                  <div className="absolute top-0 left-1/2 w-1 h-8 bg-gradient-to-b from-[rgb(218,255,1)]/80 to-transparent blur-sm"></div>
+                  <div className="absolute bottom-0 left-1/2 w-1 h-8 bg-gradient-to-t from-[rgb(218,255,1)]/60 to-transparent blur-sm"></div>
+                </div>
+
+                {/* Orbital Light Particles */}
+                <div className="absolute inset-0 animate-spin" style={{animationDuration: '15s'}}>
+                  <div className="absolute top-4 left-1/2 w-2 h-2 bg-[rgb(218,255,1)]/70 rounded-full blur-sm"></div>
+                  <div className="absolute bottom-8 right-1/4 w-1.5 h-1.5 bg-[rgb(218,255,1)]/50 rounded-full blur-sm"></div>
+                </div>
+
+                {/* Pulsing Ground Shadow */}
+                <div className="absolute -bottom-4 left-1/2 -translate-x-1/2 w-72 h-12 bg-gradient-to-r from-transparent via-[rgb(218,255,1)]/15 to-transparent rounded-full blur-2xl animate-pulse"></div>
               </div>
 
-              {/* Extend into Background - Natural Integration */}
-              <div className="absolute -left-20 top-1/2 -translate-y-1/2 w-20 h-40 bg-gradient-to-r from-transparent to-[rgb(218,255,1)]/3 blur-2xl pointer-events-none"></div>
-              <div className="absolute -right-12 top-1/3 w-12 h-32 bg-gradient-to-l from-transparent to-[rgb(218,255,1)]/5 blur-xl pointer-events-none"></div>
+              {/* Background Integration Effects */}
+              <div className="absolute -left-20 top-1/2 -translate-y-1/2 w-20 h-40 bg-gradient-to-r from-transparent to-[rgb(218,255,1)]/5 blur-2xl pointer-events-none"></div>
+              <div className="absolute -right-16 top-1/3 w-16 h-32 bg-gradient-to-l from-transparent to-[rgb(218,255,1)]/8 blur-xl pointer-events-none"></div>
             </div>
           </div>
         </div>
