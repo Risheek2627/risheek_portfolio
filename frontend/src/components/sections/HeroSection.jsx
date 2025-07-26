@@ -83,56 +83,54 @@ const HeroSection = ({ data, stats }) => {
             </div>
           </div>
 
-          {/* Right Content - AI Avatar */}
+          {/* Right Content - AI Developer Avatar */}
           <div className="flex justify-center lg:justify-end">
             <div className="relative">
               {/* Avatar Container */}
               <div className="w-80 h-80 lg:w-96 lg:h-96 relative">
                 {/* Background Glow */}
-                <div className="absolute inset-0 bg-gradient-to-r from-[rgb(218,255,1)]/20 to-transparent rounded-full blur-3xl"></div>
+                <div className="absolute inset-0 bg-gradient-to-r from-[rgb(218,255,1)]/20 to-transparent rounded-2xl blur-3xl"></div>
                 
-                {/* Avatar Placeholder - Tech Developer Illustration */}
-                <div className="absolute inset-0 bg-gradient-to-br from-[rgb(26,28,30)] to-[rgb(38,40,42)] rounded-full border border-[rgba(255,255,255,0.1)] flex items-center justify-center overflow-hidden">
-                  {/* Tech Elements */}
-                  <div className="relative w-full h-full flex items-center justify-center">
-                    {/* Developer Avatar Placeholder */}
-                    <div className="w-64 h-64 bg-gradient-to-br from-[rgb(218,255,1)]/10 to-[rgb(166,190,21)]/10 rounded-full flex items-center justify-center">
-                      <div className="text-center">
-                        <div className="w-20 h-20 bg-[rgb(218,255,1)] rounded-full mx-auto mb-4 flex items-center justify-center">
-                          <Code size={32} className="text-[rgb(17,17,19)]" />
-                        </div>
-                        <div className="text-white font-medium">AI Developer</div>
-                        <div className="text-[rgb(218,255,1)] text-sm">Backend Specialist</div>
-                      </div>
-                    </div>
-                    
-                    {/* Floating Tech Elements */}
-                    <div className="absolute top-10 left-10 w-8 h-8 bg-[rgb(218,255,1)]/20 rounded border border-[rgb(218,255,1)]/50 flex items-center justify-center animate-bounce">
-                      <span className="text-xs text-[rgb(218,255,1)]">JS</span>
-                    </div>
-                    <div className="absolute top-20 right-16 w-8 h-8 bg-[rgb(218,255,1)]/20 rounded border border-[rgb(218,255,1)]/50 flex items-center justify-center animate-bounce" style={{animationDelay: '0.5s'}}>
-                      <span className="text-xs text-[rgb(218,255,1)]">PY</span>
-                    </div>
-                    <div className="absolute bottom-20 left-16 w-8 h-8 bg-[rgb(218,255,1)]/20 rounded border border-[rgb(218,255,1)]/50 flex items-center justify-center animate-bounce" style={{animationDelay: '1s'}}>
-                      <span className="text-xs text-[rgb(218,255,1)]">API</span>
-                    </div>
-                    <div className="absolute bottom-10 right-10 w-8 h-8 bg-[rgb(218,255,1)]/20 rounded border border-[rgb(218,255,1)]/50 flex items-center justify-center animate-bounce" style={{animationDelay: '1.5s'}}>
-                      <span className="text-xs text-[rgb(218,255,1)]">AI</span>
-                    </div>
+                {/* AI Developer Image */}
+                <div className="absolute inset-0 rounded-2xl border border-[rgba(255,255,255,0.1)] overflow-hidden group hover:border-[rgb(218,255,1)]/30 transition-all duration-500">
+                  <img
+                    src="https://customer-assets.emergentagent.com/job_tech-portfolio-ai/artifacts/0iqft43y_aiboipng.png"
+                    alt="Risheek N - AI Developer"
+                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                  />
+                  
+                  {/* Overlay gradient for better text visibility */}
+                  <div className="absolute inset-0 bg-gradient-to-t from-[rgb(17,17,19)]/80 via-transparent to-transparent opacity-60"></div>
+                  
+                  {/* Floating Tech Labels */}
+                  <div className="absolute top-4 left-4 bg-[rgb(26,28,30)]/90 backdrop-blur-sm rounded-full px-3 py-1 border border-[rgb(218,255,1)]/30">
+                    <span className="text-xs font-medium text-[rgb(218,255,1)]">Backend + AI</span>
+                  </div>
+                  
+                  <div className="absolute top-4 right-4 bg-[rgb(26,28,30)]/90 backdrop-blur-sm rounded-full px-3 py-1 border border-[rgb(218,255,1)]/30">
+                    <span className="text-xs font-medium text-[rgb(218,255,1)]">while(alive)</span>
+                  </div>
+                  
+                  <div className="absolute bottom-4 left-4 bg-[rgb(26,28,30)]/90 backdrop-blur-sm rounded-full px-3 py-1 border border-[rgb(218,255,1)]/30">
+                    <span className="text-xs font-medium text-[rgb(218,255,1)]">REST API</span>
+                  </div>
+                  
+                  <div className="absolute bottom-4 right-4 bg-[rgb(26,28,30)]/90 backdrop-blur-sm rounded-full px-3 py-1 border border-[rgb(218,255,1)]/30">
+                    <span className="text-xs font-medium text-[rgb(218,255,1)]">Python + JS</span>
                   </div>
                 </div>
 
                 {/* Neural Network Lines */}
-                <svg className="absolute inset-0 w-full h-full pointer-events-none opacity-30" viewBox="0 0 400 400">
+                <svg className="absolute inset-0 w-full h-full pointer-events-none opacity-20" viewBox="0 0 400 400">
                   <defs>
                     <linearGradient id="lineGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-                      <stop offset="0%" stopColor="rgb(218,255,1)" stopOpacity="0.6" />
-                      <stop offset="100%" stopColor="rgb(218,255,1)" stopOpacity="0.1" />
+                      <stop offset="0%" stopColor="rgb(218,255,1)" stopOpacity="0.8" />
+                      <stop offset="100%" stopColor="rgb(218,255,1)" stopOpacity="0.2" />
                     </linearGradient>
                   </defs>
-                  <path d="M50,50 Q150,100 250,80 T350,120" stroke="url(#lineGradient)" strokeWidth="2" fill="none" />
-                  <path d="M80,300 Q180,250 280,270 T380,230" stroke="url(#lineGradient)" strokeWidth="2" fill="none" />
-                  <path d="M20,200 Q120,150 220,180 T320,140" stroke="url(#lineGradient)" strokeWidth="2" fill="none" />
+                  <path d="M50,50 Q150,100 250,80 T350,120" stroke="url(#lineGradient)" strokeWidth="1" fill="none" />
+                  <path d="M80,300 Q180,250 280,270 T380,230" stroke="url(#lineGradient)" strokeWidth="1" fill="none" />
+                  <path d="M20,200 Q120,150 220,180 T320,140" stroke="url(#lineGradient)" strokeWidth="1" fill="none" />
                 </svg>
               </div>
             </div>
