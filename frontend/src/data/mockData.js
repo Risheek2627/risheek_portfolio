@@ -18,8 +18,8 @@ export const portfolioData = {
     { name: "Express.js", level: 88, icon: "server", category: "framework" },
     { name: "Streamlit", level: 80, icon: "streamlit", category: "framework" },
     { name: "MySQL", level: 82, icon: "database", category: "database" },
+    { name: "MongoDB", level: 85, icon: "mongodb", category: "database" },
     { name: "REST APIs", level: 90, icon: "api", category: "backend" },
-    { name: "JWT Auth", level: 85, icon: "shield", category: "security" },
     { name: "Git", level: 88, icon: "git", category: "tools" },
     { name: "GitHub", level: 85, icon: "github", category: "tools" }
   ],
