@@ -123,8 +123,246 @@ class StatusCheck(BaseModel):
 class StatusCheckCreate(BaseModel):
     client_name: str
 
-# Include the router in the main app
-app.include_router(api_router)
+# Helper Functions
+def validate_email(email: str) -> bool:
+    pattern = r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$'
+    return re.match(pattern, email) is not None
+
+def sanitize_input(text: str) -> str:
+    # Basic HTML/script tag removal
+    text = re.sub(r'<[^>]*>', '', text)
+    text = re.sub(r'javascript:', '', text, flags=re.IGNORECASE)
+    return text.strip()
+
+# API Routes
+
+# Root endpoint
+@api_router.get("/")
+async def root():
+    return {"message": "Risheek N Portfolio API - Ready to serve!", "version": "1.0.0"}
+
+# Portfolio Data Endpoints
+@api_router.get("/portfolio", response_model=Dict[str, Any])
+async def get_portfolio_data():
+    """Get complete portfolio data"""
+    try:
+        portfolio_doc = await db.portfolio_data.find_one({}, {"_id": 0})
+        
+        if not portfolio_doc:
+            # If no portfolio data exists, seed it with default data
+            await seed_portfolio_data()
+            portfolio_doc = await db.portfolio_data.find_one({}, {"_id": 0})
+        
+        return portfolio_doc
+    except Exception as e:
+        logger.error(f"Error fetching portfolio data: {e}")
+        raise HTTPException(status_code=500, detail="Failed to fetch portfolio data")
+
+@api_router.get("/portfolio/skills", response_model=List[Skill])
+async def get_skills():
+    """Get skills data"""
+    try:
+        portfolio_doc = await db.portfolio_data.find_one({}, {"_id": 0, "skills": 1})
+        if portfolio_doc and "skills" in portfolio_doc:
+            return portfolio_doc["skills"]
+        return []
+    except Exception as e:
+        logger.error(f"Error fetching skills: {e}")
+        raise HTTPException(status_code=500, detail="Failed to fetch skills data")
+
+@api_router.get("/portfolio/projects", response_model=List[Project])
+async def get_projects():
+    """Get projects data"""
+    try:
+        portfolio_doc = await db.portfolio_data.find_one({}, {"_id": 0, "projects": 1})
+        if portfolio_doc and "projects" in portfolio_doc:
+            return portfolio_doc["projects"]
+        return []
+    except Exception as e:
+        logger.error(f"Error fetching projects: {e}")
+        raise HTTPException(status_code=500, detail="Failed to fetch projects data")
+
+# Contact Form Endpoint
+@api_router.post("/contact", response_model=ContactResponse)
+async def submit_contact_form(contact_data: ContactSubmissionCreate):
+    """Handle contact form submissions"""
+    try:
+        # Sanitize input
+        sanitized_data = {
+            "name": sanitize_input(contact_data.name),
+            "email": contact_data.email.lower().strip(),
+            "message": sanitize_input(contact_data.message)
+        }
+        
+        # Additional validation
+        if not validate_email(sanitized_data["email"]):
+            raise HTTPException(status_code=400, detail="Invalid email format")
+        
+        if len(sanitized_data["name"]) < 2:
+            raise HTTPException(status_code=400, detail="Name must be at least 2 characters")
+        
+        if len(sanitized_data["message"]) < 10:
+            raise HTTPException(status_code=400, detail="Message must be at least 10 characters")
+        
+        # Create contact submission
+        contact_submission = ContactSubmission(**sanitized_data)
+        
+        # Store in database
+        result = await db.contact_submissions.insert_one(contact_submission.dict())
+        
+        if result.inserted_id:
+            return ContactResponse(
+                success=True,
+                message="Thanks for reaching out! I'll get back to you soon.",
+                id=contact_submission.id
+            )
+        else:
+            raise HTTPException(status_code=500, detail="Failed to save contact submission")
+            
+    except HTTPException:
+        raise
+    except Exception as e:
+        logger.error(f"Error processing contact form: {e}")
+        raise HTTPException(status_code=500, detail="Failed to process contact form")
+
+# Admin Endpoints (for viewing contact submissions)
+@api_router.get("/admin/contacts", response_model=List[ContactSubmission])
+async def get_contact_submissions():
+    """Get all contact submissions (admin only)"""
+    try:
+        contacts = await db.contact_submissions.find({}, {"_id": 0}).sort("submitted_at", -1).to_list(100)
+        return [ContactSubmission(**contact) for contact in contacts]
+    except Exception as e:
+        logger.error(f"Error fetching contacts: {e}")
+        raise HTTPException(status_code=500, detail="Failed to fetch contact submissions")
+
+# Legacy endpoints (keeping for compatibility)
+@api_router.post("/status", response_model=StatusCheck)
+async def create_status_check(input: StatusCheckCreate):
+    status_dict = input.dict()
+    status_obj = StatusCheck(**status_dict)
+    _ = await db.status_checks.insert_one(status_obj.dict())
+    return status_obj
+
+@api_router.get("/status", response_model=List[StatusCheck])
+async def get_status_checks():
+    status_checks = await db.status_checks.find().to_list(1000)
+    return [StatusCheck(**status_check) for status_check in status_checks]
+
+# Seed Portfolio Data Function
+async def seed_portfolio_data():
+    """Seed initial portfolio data to MongoDB"""
+    portfolio_data = {
+        "personal": {
+            "name": "Risheek N",
+            "title": "AI-Powered Backend Developer",
+            "subtitle": "REST API Specialist",
+            "email": "risheek2627@gmail.com",
+            "phone": "9901737965",
+            "linkedin": "linkedin.com/in/risheek-n",
+            "bio": "Hey! I'm Risheek, a backend developer passionate about building scalable REST APIs and AI-powered applications. I merge backend logic with intelligent systems to create real-world impact."
+        },
+        "skills": [
+            {"name": "JavaScript", "level": 85, "icon": "js", "category": "language"},
+            {"name": "Python", "level": 90, "icon": "python", "category": "language"},
+            {"name": "Node.js", "level": 85, "icon": "nodejs", "category": "runtime"},
+            {"name": "Express.js", "level": 88, "icon": "server", "category": "framework"},
+            {"name": "Streamlit", "level": 80, "icon": "streamlit", "category": "framework"},
+            {"name": "MySQL", "level": 82, "icon": "database", "category": "database"},
+            {"name": "REST APIs", "level": 90, "icon": "api", "category": "backend"},
+            {"name": "JWT Auth", "level": 85, "icon": "shield", "category": "security"},
+            {"name": "Git", "level": 88, "icon": "git", "category": "tools"},
+            {"name": "GitHub", "level": 85, "icon": "github", "category": "tools"}
+        ],
+        "experience": [
+            {
+                "id": 1,
+                "position": "Backend Developer",
+                "company": "Ants Applied Data Science",
+                "duration": "Aug 2024 – Feb 2025",
+                "type": "Current",
+                "achievements": [
+                    "JWT-auth APIs with 35% fewer bugs",
+                    "MySQL integration for optimized backend",
+                    "Scalable architecture for Solar DL project",
+                    "Built robust REST API endpoints"
+                ],
+                "technologies": ["Node.js", "Express.js", "MySQL", "JWT", "REST APIs"]
+            },
+            {
+                "id": 2,
+                "position": "AI/ML Intern",
+                "company": "Ants Applied Data Science",
+                "duration": "Jan 2024 – Apr 2024",
+                "type": "Internship",
+                "achievements": [
+                    "ML models for prediction (+25% accuracy)",
+                    "Used Python for data analysis and modeling",
+                    "Implemented machine learning algorithms",
+                    "Data preprocessing and feature engineering"
+                ],
+                "technologies": ["Python", "Scikit-learn", "Pandas", "NumPy", "ML"]
+            }
+        ],
+        "projects": [
+            {
+                "id": 1,
+                "title": "Movie Recommendation System",
+                "description": "An intelligent movie recommendation platform using collaborative and content-based filtering algorithms to provide personalized movie suggestions.",
+                "technologies": ["Python", "Streamlit", "TMDB API", "Pandas", "Scikit-learn"],
+                "features": [
+                    "Collaborative filtering algorithm",
+                    "Content-based recommendations",
+                    "Real-time TMDB API integration",
+                    "Interactive Streamlit interface",
+                    "User preference learning"
+                ],
+                "liveUrl": "#",
+                "codeUrl": "#",
+                "image": "https://images.unsplash.com/photo-1489875347897-49f64b51c1f8?w=400&q=80",
+                "status": "Completed",
+                "category": "AI/ML"
+            }
+        ],
+        "education": [
+            {
+                "id": 1,
+                "degree": "Diploma in Computer Science",
+                "institution": "Sri Jayachamarajendra Polytechnic",
+                "duration": "2021 – 2024",
+                "type": "Diploma",
+                "status": "Completed"
+            },
+            {
+                "id": 2,
+                "degree": "SSLC",
+                "institution": "SMS Public School",
+                "duration": "2018 – 2021",
+                "type": "Secondary",
+                "status": "Completed"
+            }
+        ],
+        "testimonials": [
+            {
+                "id": 1,
+                "name": "Tech Mentor",
+                "role": "Senior Developer",
+                "company": "Tech Corp",
+                "message": "Risheek demonstrates exceptional backend development skills and shows great potential in AI integration.",
+                "avatar": "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=100&q=80"
+            }
+        ],
+        "stats": [
+            {"label": "Projects Completed", "value": "15+", "icon": "code"},
+            {"label": "API Endpoints Built", "value": "50+", "icon": "server"},
+            {"label": "Bug Reduction", "value": "35%", "icon": "shield"},
+            {"label": "Accuracy Improvement", "value": "25%", "icon": "target"}
+        ]
+    }
+    
+    # Insert or update portfolio data
+    await db.portfolio_data.replace_one({}, portfolio_data, upsert=True)
+    logger.info("Portfolio data seeded successfully")
 
 app.add_middleware(
     CORSMiddleware,
