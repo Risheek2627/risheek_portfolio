@@ -7,10 +7,13 @@ import ProjectsSection from "./sections/ProjectsSection";
 import EducationSection from "./sections/EducationSection";
 import ContactSection from "./sections/ContactSection";
 import Footer from "./sections/Footer";
-import { portfolioData } from "../data/mockData";
+import { enhancedPortfolioAPI, healthAPI } from "../services/api";
 
 const HomePage = () => {
   const [scrolled, setScrolled] = useState(false);
+  const [portfolioData, setPortfolioData] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -22,8 +25,83 @@ const HomePage = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  useEffect(() => {
+    const loadPortfolioData = async () => {
+      try {
+        setLoading(true);
+        setError(null);
+
+        // First check if API is healthy
+        await healthAPI.checkHealth();
+        
+        // Load portfolio data with caching
+        const data = await enhancedPortfolioAPI.getPortfolioWithCache();
+        setPortfolioData(data);
+        
+      } catch (err) {
+        console.error('Failed to load portfolio data:', err);
+        setError(err.message || 'Failed to load portfolio data');
+        
+        // Fallback to mock data if API fails
+        try {
+          const { portfolioData: mockData } = await import('../data/mockData');
+          setPortfolioData(mockData);
+          console.warn('Using fallback mock data due to API error');
+        } catch (mockError) {
+          console.error('Failed to load mock data as fallback:', mockError);
+        }
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    loadPortfolioData();
+  }, []);
+
+  // Loading state
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-[#0F172A] via-[#1E293B] to-[#0F172A] flex items-center justify-center">
+        <div className="text-center">
+          <div className="w-16 h-16 border-4 border-[rgb(218,255,1)] border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
+          <p className="text-white text-lg">Loading portfolio...</p>
+        </div>
+      </div>
+    );
+  }
+
+  // Error state (with fallback data)
+  if (error && !portfolioData) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-[#0F172A] via-[#1E293B] to-[#0F172A] flex items-center justify-center">
+        <div className="text-center max-w-md mx-auto px-6">
+          <div className="w-16 h-16 bg-red-500/20 rounded-full flex items-center justify-center mx-auto mb-4">
+            <span className="text-red-400 text-2xl">⚠️</span>
+          </div>
+          <h2 className="text-white text-2xl font-bold mb-4">Unable to Load Portfolio</h2>
+          <p className="text-[rgb(161,161,170)] mb-6">{error}</p>
+          <button
+            onClick={() => window.location.reload()}
+            className="bg-[rgb(218,255,1)] text-[rgb(17,17,19)] px-6 py-3 rounded-lg font-semibold hover:bg-[rgb(166,190,21)] transition-colors duration-300"
+          >
+            Try Again
+          </button>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="portfolio-container">
+      {/* API Error Banner */}
+      {error && portfolioData && (
+        <div className="fixed top-0 left-0 right-0 bg-yellow-500/10 border-b border-yellow-500/30 p-2 text-center z-50">
+          <p className="text-yellow-400 text-sm">
+            Using cached data - API temporarily unavailable
+          </p>
+        </div>
+      )}
+
       {/* Navigation Header */}
       <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
         scrolled 
