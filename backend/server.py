@@ -1,7 +1,9 @@
 from fastapi import FastAPI, APIRouter, HTTPException
 from fastapi.responses import JSONResponse
+from fastapi.middleware.cors import CORSMiddleware
+from fastapi.middleware.trustedhost import TrustedHostMiddleware
+from fastapi.middleware.gzip import GZipMiddleware
 from dotenv import load_dotenv
-from starlette.middleware.cors import CORSMiddleware
 from motor.motor_asyncio import AsyncIOMotorClient
 import os
 import logging
@@ -16,13 +18,32 @@ import re
 ROOT_DIR = Path(__file__).parent
 load_dotenv(ROOT_DIR / '.env')
 
+# Environment detection
+ENVIRONMENT = os.environ.get('ENVIRONMENT', 'development')
+IS_PRODUCTION = ENVIRONMENT == 'production'
+
 # MongoDB connection
 mongo_url = os.environ['MONGO_URL']
 client = AsyncIOMotorClient(mongo_url)
 db = client[os.environ['DB_NAME']]
 
-# Create the main app without a prefix
-app = FastAPI(title="Risheek N Portfolio API", description="Backend API for AI-Powered Portfolio")
+# Create the main app
+app = FastAPI(
+    title="Risheek N Portfolio API", 
+    description="Backend API for AI-Powered Portfolio",
+    version="1.0.0",
+    docs_url="/docs" if not IS_PRODUCTION else None,  # Disable docs in production
+    redoc_url="/redoc" if not IS_PRODUCTION else None  # Disable redoc in production
+)
+
+# Production middlewares
+if IS_PRODUCTION:
+    app.add_middleware(
+        TrustedHostMiddleware, 
+        allowed_hosts=["*.onrender.com", "*.vercel.app", "*.netlify.app"]
+    )
+
+app.add_middleware(GZipMiddleware, minimum_size=1000)
 
 # Create a router with the /api prefix
 api_router = APIRouter(prefix="/api")
