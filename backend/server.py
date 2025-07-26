@@ -385,7 +385,6 @@ async def seed_portfolio_data():
             }
         ],
         "stats": [
-            {"label": "Projects Completed", "value": "15+", "icon": "code"},
             {"label": "API Endpoints Built", "value": "50+", "icon": "server"},
             {"label": "Bug Reduction", "value": "35%", "icon": "shield"},
             {"label": "Accuracy Improvement", "value": "25%", "icon": "target"}
