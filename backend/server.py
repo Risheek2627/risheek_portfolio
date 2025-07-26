@@ -399,13 +399,30 @@ async def seed_portfolio_data():
 # Include the router in the main app
 app.include_router(api_router)
 
-app.add_middleware(
-    CORSMiddleware,
-    allow_credentials=True,
-    allow_origins=["*"],
-    allow_methods=["*"],
-    allow_headers=["*"],
-)
+# CORS Configuration
+if IS_PRODUCTION:
+    # Production CORS - Specific origins
+    allowed_origins = [
+        "https://risheek-portfolio.vercel.app",  # Replace with your actual Vercel domain
+        "https://*.vercel.app",
+        "https://*.netlify.app",
+    ]
+    app.add_middleware(
+        CORSMiddleware,
+        allow_origins=allowed_origins,
+        allow_credentials=True,
+        allow_methods=["GET", "POST"],
+        allow_headers=["*"],
+    )
+else:
+    # Development CORS - Allow all
+    app.add_middleware(
+        CORSMiddleware,
+        allow_credentials=True,
+        allow_origins=["*"],
+        allow_methods=["*"],
+        allow_headers=["*"],
+    )
 
 # Configure logging
 logging.basicConfig(
