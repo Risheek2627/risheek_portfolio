@@ -364,6 +364,9 @@ async def seed_portfolio_data():
     await db.portfolio_data.replace_one({}, portfolio_data, upsert=True)
     logger.info("Portfolio data seeded successfully")
 
+# Include the router in the main app
+app.include_router(api_router)
+
 app.add_middleware(
     CORSMiddleware,
     allow_credentials=True,
@@ -379,6 +382,24 @@ logging.basicConfig(
 )
 logger = logging.getLogger(__name__)
 
+@app.on_event("startup")
+async def startup_db_client():
+    """Initialize database on startup"""
+    try:
+        # Test database connection
+        await client.admin.command('ping')
+        logger.info("Successfully connected to MongoDB")
+        
+        # Seed portfolio data if not exists
+        portfolio_exists = await db.portfolio_data.find_one({})
+        if not portfolio_exists:
+            await seed_portfolio_data()
+            logger.info("Portfolio data seeded on startup")
+            
+    except Exception as e:
+        logger.error(f"Failed to connect to MongoDB: {e}")
+
 @app.on_event("shutdown")
 async def shutdown_db_client():
     client.close()
+    logger.info("Disconnected from MongoDB")
