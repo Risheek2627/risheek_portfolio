@@ -40,8 +40,8 @@ const SkillsSection = ({ skills }) => {
       server: "API",
       streamlit: "ST",
       database: "DB",
+      mongodb: "MDB",
       api: "REST",
-      shield: "JWT",
       git: "GIT",
       github: "GH"
     };
