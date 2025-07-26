@@ -6,7 +6,7 @@ const API = `${BACKEND_URL}/api`;
 // Create axios instance with default config
 const apiClient = axios.create({
   baseURL: API,
-  timeout: 10000,
+  timeout: 15000, // Increased timeout for production
   headers: {
     'Content-Type': 'application/json',
   },
@@ -15,7 +15,9 @@ const apiClient = axios.create({
 // Request interceptor
 apiClient.interceptors.request.use(
   (config) => {
-    console.log(`API Request: ${config.method?.toUpperCase()} ${config.url}`);
+    if (process.env.NODE_ENV === 'development') {
+      console.log(`API Request: ${config.method?.toUpperCase()} ${config.url}`);
+    }
     return config;
   },
   (error) => {
@@ -24,36 +26,66 @@ apiClient.interceptors.request.use(
   }
 );
 
-// Response interceptor
+// Response interceptor with better error handling
 apiClient.interceptors.response.use(
   (response) => {
-    console.log(`API Response: ${response.status} ${response.config.url}`);
+    if (process.env.NODE_ENV === 'development') {
+      console.log(`API Response: ${response.status} ${response.config.url}`);
+    }
     return response;
   },
   (error) => {
-    console.error('API Response Error:', error.response?.data || error.message);
+    if (process.env.NODE_ENV === 'development') {
+      console.error('API Response Error:', error.response?.data || error.message);
+    }
+    
+    // Handle specific error cases
+    if (error.code === 'ECONNABORTED') {
+      console.error('Request timeout - server may be starting up');
+    } else if (error.response?.status === 502 || error.response?.status === 503) {
+      console.error('Server temporarily unavailable');
+    }
+    
     return Promise.reject(error);
   }
 );
 
-// Portfolio API functions
+// Production-ready retry logic
+const retryRequest = async (requestFn, maxRetries = 3, delay = 1000) => {
+  for (let i = 0; i < maxRetries; i++) {
+    try {
+      return await requestFn();
+    } catch (error) {
+      if (i === maxRetries - 1) throw error;
+      
+      // Exponential backoff for retries
+      await new Promise(resolve => setTimeout(resolve, delay * Math.pow(2, i)));
+    }
+  }
+};
+
+// Portfolio API functions with retry logic
 export const portfolioAPI = {
   // Get complete portfolio data
   getPortfolio: async () => {
     try {
-      const response = await apiClient.get('/portfolio');
-      return response.data;
+      return await retryRequest(async () => {
+        const response = await apiClient.get('/portfolio');
+        return response.data;
+      });
     } catch (error) {
       console.error('Error fetching portfolio data:', error);
-      throw new Error('Failed to load portfolio data');
+      throw new Error('Failed to load portfolio data. Please try again later.');
     }
   },
 
   // Get skills data
   getSkills: async () => {
     try {
-      const response = await apiClient.get('/portfolio/skills');
-      return response.data;
+      return await retryRequest(async () => {
+        const response = await apiClient.get('/portfolio/skills');
+        return response.data;
+      });
     } catch (error) {
       console.error('Error fetching skills:', error);
       throw new Error('Failed to load skills data');
@@ -63,8 +95,10 @@ export const portfolioAPI = {
   // Get projects data
   getProjects: async () => {
     try {
-      const response = await apiClient.get('/portfolio/projects');
-      return response.data;
+      return await retryRequest(async () => {
+        const response = await apiClient.get('/portfolio/projects');
+        return response.data;
+      });
     } catch (error) {
       console.error('Error fetching projects:', error);
       throw new Error('Failed to load projects data');
