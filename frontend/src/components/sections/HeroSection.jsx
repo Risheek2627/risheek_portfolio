@@ -83,56 +83,72 @@ const HeroSection = ({ data, stats }) => {
             </div>
           </div>
 
-          {/* Right Content - AI Developer Avatar */}
-          <div className="flex justify-center lg:justify-end">
+          {/* Right Content - Integrated AI Developer Avatar */}
+          <div className="flex justify-center lg:justify-end relative">
             <div className="relative">
-              {/* Avatar Container */}
+              {/* Avatar Container with Glassmorphism */}
               <div className="w-80 h-80 lg:w-96 lg:h-96 relative">
-                {/* Background Glow */}
-                <div className="absolute inset-0 bg-gradient-to-r from-[rgb(218,255,1)]/20 to-transparent rounded-2xl blur-3xl"></div>
+                {/* Background Glow Effects */}
+                <div className="absolute -inset-4 bg-gradient-to-r from-[rgb(218,255,1)]/20 via-[rgb(218,255,1)]/10 to-transparent rounded-3xl blur-2xl animate-pulse"></div>
+                <div className="absolute -inset-2 bg-gradient-to-br from-[rgb(218,255,1)]/5 to-transparent rounded-2xl blur-xl"></div>
                 
-                {/* AI Developer Image */}
-                <div className="absolute inset-0 rounded-2xl border border-[rgba(255,255,255,0.1)] overflow-hidden group hover:border-[rgb(218,255,1)]/30 transition-all duration-500">
-                  <img
-                    src="https://customer-assets.emergentagent.com/job_tech-portfolio-ai/artifacts/0iqft43y_aiboipng.png"
-                    alt="Risheek N - AI Developer"
-                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                  />
+                {/* Glassmorphism Avatar Container */}
+                <div className="relative w-full h-full bg-gradient-to-br from-[rgba(255,255,255,0.1)] to-[rgba(255,255,255,0.05)] backdrop-blur-xl border border-[rgba(255,255,255,0.2)] rounded-2xl overflow-hidden shadow-2xl hover:shadow-[rgb(218,255,1)]/20 transition-all duration-700 group animate-float">
                   
-                  {/* Overlay gradient for better text visibility */}
-                  <div className="absolute inset-0 bg-gradient-to-t from-[rgb(17,17,19)]/80 via-transparent to-transparent opacity-60"></div>
-                  
-                  {/* Floating Tech Labels */}
-                  <div className="absolute top-4 left-4 bg-[rgb(26,28,30)]/90 backdrop-blur-sm rounded-full px-3 py-1 border border-[rgb(218,255,1)]/30">
-                    <span className="text-xs font-medium text-[rgb(218,255,1)]">Backend + AI</span>
-                  </div>
-                  
-                  <div className="absolute top-4 right-4 bg-[rgb(26,28,30)]/90 backdrop-blur-sm rounded-full px-3 py-1 border border-[rgb(218,255,1)]/30">
-                    <span className="text-xs font-medium text-[rgb(218,255,1)]">while(alive)</span>
-                  </div>
-                  
-                  <div className="absolute bottom-4 left-4 bg-[rgb(26,28,30)]/90 backdrop-blur-sm rounded-full px-3 py-1 border border-[rgb(218,255,1)]/30">
-                    <span className="text-xs font-medium text-[rgb(218,255,1)]">REST API</span>
-                  </div>
-                  
-                  <div className="absolute bottom-4 right-4 bg-[rgb(26,28,30)]/90 backdrop-blur-sm rounded-full px-3 py-1 border border-[rgb(218,255,1)]/30">
-                    <span className="text-xs font-medium text-[rgb(218,255,1)]">Python + JS</span>
+                  {/* AI Developer Image */}
+                  <div className="relative w-full h-full">
+                    <img
+                      src="https://customer-assets.emergentagent.com/job_tech-portfolio-ai/artifacts/0iqft43y_aiboipng.png"
+                      alt="Risheek N - AI Developer"
+                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+                    />
+                    
+                    {/* Subtle overlay for better integration */}
+                    <div className="absolute inset-0 bg-gradient-to-t from-[rgb(17,17,19)]/30 via-transparent to-[rgb(218,255,1)]/5"></div>
+                    
+                    {/* Floating Tech Badges - More Integrated */}
+                    <div className="absolute top-6 left-6 bg-[rgba(255,255,255,0.1)] backdrop-blur-md rounded-full px-4 py-2 border border-[rgba(218,255,1,0.3)] shadow-lg">
+                      <span className="text-sm font-semibold text-[rgb(218,255,1)] tracking-wide">Backend + AI</span>
+                    </div>
+                    
+                    <div className="absolute top-6 right-6 bg-[rgba(255,255,255,0.1)] backdrop-blur-md rounded-full px-4 py-2 border border-[rgba(218,255,1,0.3)] shadow-lg">
+                      <span className="text-sm font-semibold text-[rgb(218,255,1)] tracking-wide">while(alive)</span>
+                    </div>
+                    
+                    <div className="absolute bottom-6 left-6 bg-[rgba(255,255,255,0.1)] backdrop-blur-md rounded-full px-4 py-2 border border-[rgba(218,255,1,0.3)] shadow-lg">
+                      <span className="text-sm font-semibold text-[rgb(218,255,1)] tracking-wide">REST API</span>
+                    </div>
+                    
+                    <div className="absolute bottom-6 right-6 bg-[rgba(255,255,255,0.1)] backdrop-blur-md rounded-full px-4 py-2 border border-[rgba(218,255,1,0.3)] shadow-lg">
+                      <span className="text-sm font-semibold text-[rgb(218,255,1)] tracking-wide">Python + JS</span>
+                    </div>
+                    
+                    {/* Interactive Glow Ring */}
+                    <div className="absolute inset-0 rounded-2xl border-2 border-transparent group-hover:border-[rgb(218,255,1)]/40 transition-all duration-700"></div>
                   </div>
                 </div>
 
-                {/* Neural Network Lines */}
-                <svg className="absolute inset-0 w-full h-full pointer-events-none opacity-20" viewBox="0 0 400 400">
+                {/* Decorative Neural Network Lines - More Subtle */}
+                <svg className="absolute -inset-8 w-full h-full pointer-events-none opacity-10" viewBox="0 0 400 400">
                   <defs>
-                    <linearGradient id="lineGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-                      <stop offset="0%" stopColor="rgb(218,255,1)" stopOpacity="0.8" />
-                      <stop offset="100%" stopColor="rgb(218,255,1)" stopOpacity="0.2" />
+                    <linearGradient id="neuralGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                      <stop offset="0%" stopColor="rgb(218,255,1)" stopOpacity="0.6" />
+                      <stop offset="100%" stopColor="rgb(218,255,1)" stopOpacity="0.1" />
                     </linearGradient>
                   </defs>
-                  <path d="M50,50 Q150,100 250,80 T350,120" stroke="url(#lineGradient)" strokeWidth="1" fill="none" />
-                  <path d="M80,300 Q180,250 280,270 T380,230" stroke="url(#lineGradient)" strokeWidth="1" fill="none" />
-                  <path d="M20,200 Q120,150 220,180 T320,140" stroke="url(#lineGradient)" strokeWidth="1" fill="none" />
+                  <path d="M0,100 Q100,50 200,100 T400,80" stroke="url(#neuralGradient)" strokeWidth="1" fill="none" />
+                  <path d="M0,200 Q100,150 200,200 T400,180" stroke="url(#neuralGradient)" strokeWidth="1" fill="none" />
+                  <path d="M0,300 Q100,250 200,300 T400,280" stroke="url(#neuralGradient)" strokeWidth="1" fill="none" />
                 </svg>
+
+                {/* Floating Particles */}
+                <div className="absolute top-1/4 -left-8 w-2 h-2 bg-[rgb(218,255,1)]/60 rounded-full animate-bounce" style={{animationDelay: '0s', animationDuration: '3s'}}></div>
+                <div className="absolute top-1/2 -right-6 w-1.5 h-1.5 bg-[rgb(218,255,1)]/40 rounded-full animate-bounce" style={{animationDelay: '1s', animationDuration: '4s'}}></div>
+                <div className="absolute bottom-1/3 -left-4 w-1 h-1 bg-[rgb(218,255,1)]/50 rounded-full animate-bounce" style={{animationDelay: '2s', animationDuration: '5s'}}></div>
               </div>
+              
+              {/* Overlap Extension - Makes it feel connected */}
+              <div className="absolute -left-16 top-1/2 -translate-y-1/2 w-16 h-32 bg-gradient-to-r from-transparent to-[rgb(218,255,1)]/5 blur-xl pointer-events-none"></div>
             </div>
           </div>
         </div>
