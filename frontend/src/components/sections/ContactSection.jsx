@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Mail, Phone, Linkedin, Send, CheckCircle, AlertCircle } from "lucide-react";
-import { submitContactForm } from "../../data/mockData";
+import { contactAPI } from "../../services/api";
 
 const ContactSection = () => {
   const [formData, setFormData] = useState({
@@ -21,9 +21,11 @@ const ContactSection = () => {
 
   const validateForm = () => {
     if (!formData.name.trim()) return "Name is required";
+    if (formData.name.trim().length < 2) return "Name must be at least 2 characters";
     if (!formData.email.trim()) return "Email is required";
     if (!/\S+@\S+\.\S+/.test(formData.email)) return "Please enter a valid email";
     if (!formData.message.trim()) return "Message is required";
+    if (formData.message.trim().length < 10) return "Message must be at least 10 characters";
     return null;
   };
 
@@ -40,7 +42,7 @@ const ContactSection = () => {
     setSubmitStatus(null);
 
     try {
-      const response = await submitContactForm(formData);
+      const response = await contactAPI.submitContact(formData);
       if (response.success) {
         setSubmitStatus({ type: 'success', message: response.message });
         setFormData({ name: '', email: '', message: '' });
@@ -48,7 +50,7 @@ const ContactSection = () => {
     } catch (error) {
       setSubmitStatus({ 
         type: 'error', 
-        message: 'Failed to send message. Please try again.' 
+        message: error.message || 'Failed to send message. Please try again.' 
       });
     } finally {
       setIsSubmitting(false);
