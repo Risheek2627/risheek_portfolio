@@ -140,7 +140,7 @@ const ContactSection = () => {
                   </div>
                   <div className="flex justify-between">
                     <span className="text-[rgb(161,161,170)]">Experience:</span>
-                    <span className="text-white">2+ Years</span>
+                    <span className="text-white"> 1 Year</span>
                   </div>
                   <div className="flex justify-between">
                     <span className="text-[rgb(161,161,170)]">Availability:</span>
