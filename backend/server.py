@@ -236,6 +236,17 @@ async def get_contact_submissions():
         logger.error(f"Error fetching contacts: {e}")
         raise HTTPException(status_code=500, detail="Failed to fetch contact submissions")
 
+# Admin endpoint to refresh portfolio data
+@api_router.post("/admin/refresh-portfolio")
+async def refresh_portfolio_data():
+    """Refresh portfolio data - Force reseed"""
+    try:
+        await seed_portfolio_data()
+        return {"success": True, "message": "Portfolio data refreshed successfully"}
+    except Exception as e:
+        logger.error(f"Error refreshing portfolio data: {e}")
+        raise HTTPException(status_code=500, detail="Failed to refresh portfolio data")
+
 # Legacy endpoints (keeping for compatibility)
 @api_router.post("/status", response_model=StatusCheck)
 async def create_status_check(input: StatusCheckCreate):
