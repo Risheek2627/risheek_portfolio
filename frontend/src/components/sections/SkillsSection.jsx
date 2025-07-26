@@ -29,7 +29,6 @@ const SkillsSection = ({ skills }) => {
     framework: "Frameworks",
     database: "Database",
     backend: "Backend",
-    security: "Security",
     tools: "Tools"
   };
 
