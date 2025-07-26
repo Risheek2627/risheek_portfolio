@@ -317,7 +317,7 @@ class PortfolioAPITester:
                     json=test["data"]
                 )
                 
-                if response.status_code == test["expected_status"]:
+                if response.status_code in test["expected_status"]:
                     self.log_result(f"Validation - {test['name']}", True, 
                                   f"Correctly rejected with status {response.status_code}")
                 else:
