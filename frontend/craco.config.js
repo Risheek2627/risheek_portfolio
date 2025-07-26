@@ -13,6 +13,37 @@ module.exports = {
     },
     configure: (webpackConfig) => {
       
+      // Production optimizations
+      if (process.env.NODE_ENV === 'production') {
+        // Disable source maps in production for security and performance
+        webpackConfig.devtool = false;
+        
+        // Optimize bundle splitting
+        webpackConfig.optimization = {
+          ...webpackConfig.optimization,
+          splitChunks: {
+            chunks: 'all',
+            maxSize: 244000, // 244KB max chunk size
+            cacheGroups: {
+              vendor: {
+                test: /[\\/]node_modules[\\/]/,
+                name: 'vendors',
+                chunks: 'all',
+                maxSize: 244000,
+              },
+              common: {
+                name: 'common',
+                minChunks: 2,
+                chunks: 'all',
+                enforce: true,
+              },
+            },
+          },
+          usedExports: true,
+          sideEffects: false,
+        };
+      }
+      
       // Disable hot reload completely if environment variable is set
       if (config.disableHotReload) {
         // Remove hot reload related plugins
@@ -43,4 +74,13 @@ module.exports = {
       return webpackConfig;
     },
   },
+  
+  // Development server configuration
+  devServer: process.env.NODE_ENV === 'development' ? {
+    port: 3000,
+    hot: true,
+    headers: {
+      'Access-Control-Allow-Origin': '*',
+    },
+  } : undefined,
 };
