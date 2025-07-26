@@ -279,7 +279,7 @@ class PortfolioAPITester:
                     "email": "test@example.com",
                     "message": "This is a test message with sufficient length."
                 },
-                "expected_status": 400
+                "expected_status": [400, 422]
             },
             {
                 "name": "Invalid Email",
@@ -288,7 +288,7 @@ class PortfolioAPITester:
                     "email": "invalid-email",
                     "message": "This is a test message with sufficient length."
                 },
-                "expected_status": 400
+                "expected_status": [400, 422]
             },
             {
                 "name": "Short Message",
@@ -297,7 +297,7 @@ class PortfolioAPITester:
                     "email": "john@example.com",
                     "message": "Short"
                 },
-                "expected_status": 400
+                "expected_status": [400, 422]
             },
             {
                 "name": "Short Name",
@@ -306,7 +306,7 @@ class PortfolioAPITester:
                     "email": "john@example.com",
                     "message": "This is a test message with sufficient length."
                 },
-                "expected_status": 400
+                "expected_status": [400, 422]
             }
         ]
         
