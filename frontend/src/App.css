@@ -57,6 +57,16 @@ body {
   100% { transform: translate(100px, 100px); }
 }
 
+/* Floating Animation for Avatar */
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-12px); }
+}
+
+.animate-float {
+  animation: float 6s ease-in-out infinite;
+}
+
 /* Portfolio Container */
 .portfolio-container {
   position: relative;
