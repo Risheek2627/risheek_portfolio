@@ -38,7 +38,6 @@ const SkillsSection = ({ skills }) => {
       python: "PY",
       nodejs: "NODE",
       server: "API",
-      streamlit: "ST",
       database: "DB",
       mongodb: "MDB",
       api: "REST",
