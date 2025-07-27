@@ -101,7 +101,7 @@ const ExperienceSection = ({ experience }) => {
               Ready for New Challenges
             </h3>
             <p className="text-[rgb(161,161,170)] mb-6 max-w-3xl mx-auto">
-              With hands-on experience in backend development and AI/ML integration, I'm excited to tackle 
+              With hands-on experience in backend development . I'm excited to tackle 
               complex problems and contribute to innovative projects that make a real impact.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
