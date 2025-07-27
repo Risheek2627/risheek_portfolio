@@ -2,11 +2,17 @@ import React from "react";
 import { Download, Mail, ArrowRight, Code, Server, Zap, Target } from "lucide-react";
 
 const HeroSection = ({ data, stats }) => {
-  const handleDownloadResume = () => {
-    // Mock download action
-    console.log("Downloading resume...");
-    alert("Resume download will be implemented with backend!");
-  };
+const handleDownloadResume = () => {
+  const resumeUrl = "/Risheek_backend.pdf"; // exact name from your public folder
+  const link = document.createElement("a");
+  link.href = resumeUrl;
+  link.download = "Risheek_N_Resume.pdf"; // desired download filename
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
+};
+
+
 
   const handleHireMe = () => {
     document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' });
