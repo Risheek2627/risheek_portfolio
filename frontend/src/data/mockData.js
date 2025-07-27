@@ -16,7 +16,6 @@ export const portfolioData = {
     { name: "Python", level: 90, icon: "python", category: "language" },
     { name: "Node.js", level: 85, icon: "nodejs", category: "runtime" },
     { name: "Express.js", level: 88, icon: "server", category: "framework" },
-    { name: "Streamlit", level: 80, icon: "streamlit", category: "framework" },
     { name: "MySQL", level: 82, icon: "database", category: "database" },
     { name: "MongoDB", level: 85, icon: "mongodb", category: "database" },
     { name: "REST APIs", level: 90, icon: "api", category: "backend" },
@@ -34,7 +33,6 @@ export const portfolioData = {
       achievements: [
         "JWT-auth APIs with 35% fewer bugs",
         "MySQL integration for optimized backend",
-        "Scalable architecture for Solar DL project",
         "Built robust REST API endpoints"
       ],
       technologies: ["Node.js", "Express.js", "MySQL", "JWT", "REST APIs"]
