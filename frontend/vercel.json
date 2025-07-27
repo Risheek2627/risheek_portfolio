@@ -22,11 +22,11 @@
     }
   ],
   "env": {
-    "REACT_APP_BACKEND_URL": "@backend_url"
+    "REACT_APP_BACKEND_URL": "https://risheek-portfolio.onrender.com"
   },
   "build": {
     "env": {
-      "REACT_APP_BACKEND_URL": "@backend_url"
+      "REACT_APP_BACKEND_URL": "https://risheek-portfolio.onrender.com"
     }
   }
 }
