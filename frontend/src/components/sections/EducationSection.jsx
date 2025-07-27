@@ -72,14 +72,11 @@ const EducationSection = ({ education }) => {
                     <h4 className="text-lg font-semibold text-white mb-3">Key Subjects & Skills</h4>
                     <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
                       {[
-                        "Programming Fundamentals",
-                        "Database Management",
-                        "Web Development",
-                        "System Analysis",
-                        "Data Structures",
-                        "Software Engineering",
-                        "Computer Networks",
-                        "Project Management"
+                          "Basics of Programming",
+                          "Database Fundamentals",
+                           "Web Development",
+                          "Data Structures",
+                            "IT Lab Projects"
                       ].map((subject, index) => (
                         <div
                           key={index}
