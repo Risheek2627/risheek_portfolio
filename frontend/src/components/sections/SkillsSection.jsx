@@ -124,16 +124,16 @@ const SkillsSection = ({ skills }) => {
             
             <div className="flex flex-wrap justify-center gap-4">
               <div className="bg-[rgb(38,40,42)] rounded-full px-6 py-3 border border-[rgb(63,63,63)]">
-                <span className="text-[rgb(218,218,218)] font-medium">REST API Development</span>
+                <span className="text-[rgb(218,218,218)] font-medium">Backend Development</span>
               </div>
               <div className="bg-[rgb(38,40,42)] rounded-full px-6 py-3 border border-[rgb(63,63,63)]">
-                <span className="text-[rgb(218,218,218)] font-medium">Machine Learning Integration</span>
+                <span className="text-[rgb(218,218,218)] font-medium">AI Integration</span>
               </div>
               <div className="bg-[rgb(38,40,42)] rounded-full px-6 py-3 border border-[rgb(63,63,63)]">
-                <span className="text-[rgb(218,218,218)] font-medium">Database Optimization</span>
+                <span className="text-[rgb(218,218,218)] font-medium">Project Based Learning </span>
               </div>
               <div className="bg-[rgb(38,40,42)] rounded-full px-6 py-3 border border-[rgb(63,63,63)]">
-                <span className="text-[rgb(218,218,218)] font-medium">System Architecture</span>
+                <span className="text-[rgb(218,218,218)] font-medium">Rest API's</span>
               </div>
             </div>
           </div>
