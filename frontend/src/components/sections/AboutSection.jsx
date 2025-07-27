@@ -4,24 +4,24 @@ import { Brain, Code, Database, Cpu } from "lucide-react";
 const AboutSection = ({ data }) => {
   const highlights = [
     {
-      icon: Brain,
+      icon: Cpu,
       title: "AI Integration",
       description: "Merging AI capabilities with backend systems for intelligent applications"
     },
     {
       icon: Code,
-      title: "Clean Code",
+      title: "Backend Development",
       description: "Writing maintainable, scalable code following best practices"
     },
     {
       icon: Database,
-      title: "Data Management",
-      description: "Optimizing database queries and data structures for performance"
+      title: "Database Handling",
+      description: "Managing and querying data using MySQL with clean structure"
     },
     {
-      icon: Cpu,
-      title: "System Architecture",
-      description: "Designing robust backend architectures for modern applications"
+      icon: Brain,
+      title: "Hands-On Learning",
+      description: "Building real-world projects to master backend and AI skills"
     }
   ];
 
