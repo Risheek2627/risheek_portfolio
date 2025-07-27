@@ -46,10 +46,9 @@ const AboutSection = ({ data }) => {
                 </p>
                 
                 <p className="text-[rgb(161,161,170)] leading-relaxed mb-8">
-                  With a strong foundation in backend development and a passion for artificial intelligence, 
-                  I specialize in creating robust REST APIs and integrating AI-powered features that solve 
-                  real-world problems. My experience spans from optimizing database performance to implementing 
-                  machine learning models in production environments.
+                  I'm a backend developer with a passion for building real-world applications powered by intelligent systems. 
+                  I’ve worked on creating secure REST APIs, integrating AI services like Gemini, and managing data using MySQL. 
+                  With hands-on project experience and internship exposure, I’m constantly learning and improving through code.
                 </p>
 
                 <div className="flex flex-wrap gap-4">
